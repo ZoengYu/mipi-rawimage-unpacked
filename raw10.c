@@ -3,8 +3,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-char raw_array[4032 * 3024 * 2];	//24385536 byte
-short pixel_array[4032 * 3024 * 2]; //24385536 byte
+//char raw_array[4032 * 3024 * 2];	//24385536 byte
+//short pixel_array[4032 * 3024 * 2]; //24385536 byte
 static const char *help = "help";
 int main(int argc, char *argv[])
 {
@@ -12,6 +12,8 @@ int main(int argc, char *argv[])
 	char *file_name = argv[1];
 	int width = atoi(argv[2]);
 	int height = atoi(argv[3]);
+	char *raw_array = malloc(width * height * 2);	//24385536 byte
+	short *pixel_array = malloc(width * height * 2); //24385536 byte
 	char out_file[256];
 	int byte_index = 0;
 	int pixel_index = 0;
@@ -55,6 +57,8 @@ int main(int argc, char *argv[])
 	fwrite(pixel_array, 1, out_size, pixel_fb); //(short)pixel_array =4032x3024*2 (int)out_size = 4032*3024*2, pixel_fb=out_file
 	fclose(raw_fb);
 	fclose(pixel_fb);
+	free(pixel_array);
+	free(raw_array);
 	printf("convert finished !!! \r\n");
 	return 0;
 }
